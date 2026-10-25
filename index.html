@@ -4,7 +4,7 @@
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>North-web-dev — reverse the wire</title>
-<meta name="description" content="Byte-exact browser TLS/HTTP2 fingerprinting tools in Go: impersonate-http, fpcheck, fingerprint-db."/>
+<meta name="description" content="Byte-exact browser TLS fingerprints (JA3/JA4) and HTTP2/Akamai in Go and Rust — impersonate-http, fpcheck, ja4-guard. Beat anti-bot without a headless browser. Open source, a curl_cffi/utls alternative for Go."/>
 <style>
   :root{
     --sumi:#0a1726; --panel:#0d2338; --panel2:#102a44;
@@ -143,6 +143,32 @@
         <div class="links"><a href="https://github.com/North-web-dev?tab=repositories">all repos →</a></div>
       </div>
     </div>
+  </section>
+
+  <div class="rule"></div>
+
+  <section>
+    <h2>The three numbers that decide if you get blocked</h2>
+    <p style="color:var(--foamc);font-size:14.5px;max-width:720px;margin:12px 0 18px">
+      A CDN reads your fingerprint before your HTTP request even arrives. A matching User-Agent does nothing if the handshake underneath says "library", not "browser".
+    </p>
+    <table>
+      <tr><td><b>JA3</b></td><td>MD5 over the TLS ClientHello. <span class="wave">Trap:</span> Chrome ≥110 shuffles its extension order every connection, so its JA3 is non-deterministic <em>by design</em>. A fixed Chrome JA3 matches almost nothing.</td></tr>
+      <tr><td><b>JA4</b></td><td>Same idea, but extensions are <b>sorted</b> before hashing — so it's stable across connections. <span class="wave">This is the one to match.</span></td></tr>
+      <tr><td><b>Akamai h2</b></td><td>The HTTP/2 fingerprint: SETTINGS, window update, stream priority, pseudo-header order. Catches you even with perfect TLS — most HTTP libraries get it wrong.</td></tr>
+    </table>
+  </section>
+
+  <div class="rule"></div>
+
+  <section>
+    <h2>What's different here</h2>
+    <table>
+      <tr><td>Pure Go &amp; Rust</td><td>Byte-exact browser TLS with no headless browser and no CGo (<code>impersonate-http</code>, <code>impersonate-rs</code> via BoringSSL).</td></tr>
+      <tr><td>Both sides</td><td>The sword <em>and</em> the shield — emit a fingerprint (<code>impersonate-*</code>) and detect one (<code>ja4-guard</code>).</td></tr>
+      <tr><td>Measured, not guessed</td><td>Parity tables and datasets come from real handshakes against a live reflector (<a href="https://fp.shshbshsnang.shop/">fp.shshbshsnang.shop</a>), with provenance.</td></tr>
+      <tr><td>Honest about limits</td><td>Every README says what each tool does <b>and does not</b> do — a careful spoofer still beats the guard, and we say so.</td></tr>
+    </table>
   </section>
 
   <div class="rule"></div>
