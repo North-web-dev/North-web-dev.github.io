@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>North-web-dev — reverse the wire</title>
+<meta name="description" content="Byte-exact browser TLS/HTTP2 fingerprinting tools in Go: impersonate-http, fpcheck, fingerprint-db."/>
+<style>
+  :root{
+    --sumi:#0a1726; --panel:#0d2338; --panel2:#102a44;
+    --indigo:#1b3a5b; --wave:#2e5f86; --wavel:#7fa8c9;
+    --foam:#f4ead2; --foamc:#eef5fb; --mute:#9fb8cc;
+    --shu:#e34234; --kin:#d9a441;
+    --mono:ui-monospace,"JetBrains Mono","DejaVu Sans Mono",monospace;
+    --sans:"Yu Gothic",system-ui,-apple-system,"Segoe UI",sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--sumi);color:var(--foamc);font-family:var(--sans);line-height:1.6;
+    background-image:radial-gradient(1200px 500px at 70% -10%, #15335255, transparent),
+      repeating-radial-gradient(circle at 50% 100%, #1b3a5b22 0 2px, transparent 2px 28px);}
+  a{color:var(--wavel);text-decoration:none}
+  a:hover{color:var(--foam)}
+  .wrap{max-width:960px;margin:0 auto;padding:0 20px}
+  header{padding:72px 0 40px;text-align:center}
+  .mark{display:inline-flex;align-items:center;gap:16px;justify-content:center}
+  .seal{width:64px;height:64px;border-radius:10px;background:var(--shu);color:#fbe9df;
+    display:flex;align-items:center;justify-content:center;font-size:36px;font-weight:700;
+    box-shadow:inset 0 0 0 2px #fbe9df55}
+  h1{font-size:clamp(34px,7vw,60px);margin:14px 0 4px;color:var(--foam);letter-spacing:1px}
+  .sub{color:var(--kin);letter-spacing:8px;font-size:13px;margin-bottom:10px}
+  .tag{color:var(--mute);font-family:var(--mono);font-size:14px}
+  .rule{height:1px;background:linear-gradient(90deg,transparent,#d9a44166 20%,#d9a44166 80%,transparent);margin:40px 0}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  @media(max-width:680px){.grid{grid-template-columns:1fr}}
+  .card{background:var(--panel2);border:1px solid #d9a44140;border-left:4px solid var(--shu);
+    border-radius:12px;padding:20px 22px;position:relative}
+  .card h3{margin:0 0 4px;font-family:var(--mono);font-size:19px;color:var(--foam)}
+  .card .meta{font-family:var(--mono);font-size:12px;color:var(--mute);margin-bottom:10px}
+  .dot{display:inline-block;width:9px;height:9px;border-radius:50%;vertical-align:middle;margin-right:6px}
+  .card p{margin:0 0 14px;font-size:14.5px;color:var(--foamc)}
+  .links a{font-family:var(--mono);font-size:13px;margin-right:16px}
+  .badge{font-family:var(--mono);font-size:12px;color:var(--kin)}
+  section h2{font-family:var(--mono);font-size:13px;letter-spacing:3px;color:var(--kin);text-transform:uppercase}
+  table{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:13px;margin-top:10px}
+  td{padding:7px 10px;border-bottom:1px solid #1b3a5b66}
+  td:first-child{color:var(--mute);white-space:nowrap}
+  code{background:#0a1726;border:1px solid #1b3a5b;border-radius:5px;padding:2px 7px;font-family:var(--mono);font-size:12.5px;color:var(--foamc);word-break:break-all}
+  footer{color:var(--mute);font-family:var(--mono);font-size:12.5px;text-align:center;padding:50px 0 60px}
+  .wave{color:var(--shu)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="mark"><span class="seal">北</span></div>
+    <h1>North-web-dev</h1>
+    <div class="sub">北 海 · K I T A K A I</div>
+    <div class="tag">reverse engineering the wire · byte-exact, or detectable</div>
+  </header>
+
+  <div class="rule"></div>
+
+  <section>
+    <h2>Tools</h2>
+    <div class="grid" style="margin-top:14px">
+      <div class="card">
+        <h3>impersonate-http</h3>
+        <div class="meta"><span class="dot" style="background:#00ADD8"></span>Go &nbsp;·&nbsp; <span class="badge">v0.5.0</span></div>
+        <p>Byte-exact browser TLS fingerprint (uTLS) for Go's <code>http.Client</code>. Beat JA3/JA4 blocking with no headless browser and no CGo. Measured parity table for Chrome/Firefox/Safari/iOS.</p>
+        <div class="links">
+          <a href="https://github.com/North-web-dev/impersonate-http">repo →</a>
+          <a href="https://github.com/North-web-dev/impersonate-http/releases/tag/v0.5.0">release</a>
+        </div>
+      </div>
+      <div class="card">
+        <h3>fpcheck</h3>
+        <div class="meta"><span class="dot" style="background:#00ADD8"></span>Go &nbsp;·&nbsp; <span class="badge">v0.2.0</span></div>
+        <p>Self-hostable TLS / HTTP2 fingerprint tester and differ. Reports your JA3 / JA4 / JA4H + Akamai HTTP/2 fingerprint and diffs two clients. Ships a distroless Docker image.</p>
+        <div class="links">
+          <a href="https://github.com/North-web-dev/fpcheck">repo →</a>
+          <a href="https://github.com/North-web-dev/fpcheck/releases/tag/v0.2.0">release</a>
+        </div>
+      </div>
+      <div class="card">
+        <h3>fingerprint-db</h3>
+        <div class="meta"><span class="dot" style="background:#00ADD8"></span>Go + Python &nbsp;·&nbsp; <span class="badge">v0.2.0</span></div>
+        <p>Open, versioned dataset of measured browser TLS (JA3/JA4) and HTTP/2 (Akamai) fingerprints, with Go and Python loaders. Schema-validated, PR-friendly, provenance-tracked.</p>
+        <div class="links">
+          <a href="https://github.com/North-web-dev/fingerprint-db">repo →</a>
+          <a href="https://github.com/North-web-dev/fingerprint-db/releases/tag/v0.2.0">release</a>
+        </div>
+      </div>
+      <div class="card">
+        <h3>more</h3>
+        <div class="meta"><span class="dot" style="background:#7fa8c9"></span>the wire · quiet automation</div>
+        <p>poolctl, p2c-sniper, tgcloak, and others — TLS cloaking, token-pool gateways, latency-focused automation.</p>
+        <div class="links"><a href="https://github.com/North-web-dev?tab=repositories">all repos →</a></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="rule"></div>
+
+  <section>
+    <h2>Support <span class="wave">·</span> donate</h2>
+    <table>
+      <tr><td>BTC</td><td><code>bc1q0sfghv7yfl594gjurhyhlhdgm0dtwh4dkjha36</code></td></tr>
+      <tr><td>ETH / USDT-ERC20 / BNB</td><td><code>0xB827b5a8B6c5111946c5D872933b2C23484E87dE</code></td></tr>
+      <tr><td>SOL</td><td><code>3ch5aHrPp3CierhiNXmqmtFH2dMHh6Gfv7a97KtLMMCh</code></td></tr>
+      <tr><td>USDT-TRC20 / TRX</td><td><code>TUAyz7TjgJdFVD2oFHWUUTNrzzAnBRgySG</code></td></tr>
+      <tr><td>TON</td><td><code>UQAJmYVuR3hh02etjaPKJF-h6jcpdSnq9ZIFvI64NEskS6tx</code></td></tr>
+    </table>
+  </section>
+
+  <footer>
+    <div>「 極めて正確に · byte-exact, or detectable 」</div>
+    <div style="margin-top:8px"><a href="https://github.com/North-web-dev">github.com/North-web-dev</a></div>
+  </footer>
+</div>
+</body>
+</html>
